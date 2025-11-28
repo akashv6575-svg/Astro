@@ -10,13 +10,12 @@
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
         
         /* FIX: Prevents horizontal scroll on the root elements */
+        /* If this still fails, the wrapper div below is the definitive solution. */
         html, body {
-            overflow-x: hidden; /* This should resolve the scrolling issue */
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden; 
         }
         
-        body {
-            font-family: 'Inter', sans-serif;
-        }
         /* Style for the Testimonial background effect */
         .testimonial-bg {
             background: rgba(255, 255, 255, 0.1);
@@ -682,14 +681,22 @@
             appRoot.parentNode.insertBefore(header, appRoot);
             appRoot.parentNode.insertBefore(mobileMenuOverlay, appRoot);
 
-            // Main Content Sections
-            appRoot.appendChild(renderHero());
-            appRoot.appendChild(renderServicesSection());
-            appRoot.appendChild(renderAboutSection());
-            appRoot.appendChild(renderInsightsSection());
-            appRoot.appendChild(renderTestimonialsSection());
-            appRoot.appendChild(renderContactSection());
-            appRoot.appendChild(renderFooter());
+            // ⚠️ FIX: Create a wrapper that forces overflow-x: hidden on all content
+            const contentWrapper = document.createElement('div');
+            contentWrapper.id = 'content-wrapper';
+            contentWrapper.style.overflowX = 'hidden';
+
+            // Append all main content sections to the new wrapper
+            contentWrapper.appendChild(renderHero());
+            contentWrapper.appendChild(renderServicesSection());
+            contentWrapper.appendChild(renderAboutSection());
+            contentWrapper.appendChild(renderInsightsSection());
+            contentWrapper.appendChild(renderTestimonialsSection());
+            contentWrapper.appendChild(renderContactSection());
+            contentWrapper.appendChild(renderFooter());
+            
+            // Append the wrapper to the root
+            appRoot.appendChild(contentWrapper);
         }
 
         // Run the app when the window loads
