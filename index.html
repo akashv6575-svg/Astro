@@ -317,68 +317,90 @@
             return section;
         }
 
-        function renderServiceCard(service, index) {
-            const card = document.createElement('div');
-            card.className = "flex flex-col bg-white shadow-xl rounded-xl transition duration-300 transform hover:scale-[1.02] hover:shadow-2xl overflow-hidden border border-gray-100 h-full";
+        // ... inside the <script> block of index.html ...
 
-            // Determine direction for ScrollReveal
-            let direction = 'bottom';
-            if (index % 4 === 0) direction = 'left';
-            else if (index % 4 === 3) direction = 'right';
+          // ... inside the <script> block of index.html ...
 
-            card.className += " scroll-reveal";
-            card.setAttribute('data-direction', direction);
-            card.setAttribute('data-delay', (index % 4) * 100);
-            
-            // --- UPDATED LOGIC FOR FILENAME ---
-            let fileName;
-            const serviceTitle = service.title;
+function renderServiceCard(service, index) {
+    const card = document.createElement('div');
+    card.className = "flex flex-col bg-white shadow-xl rounded-xl transition duration-300 transform hover:scale-[1.02] hover:shadow-2xl overflow-hidden border border-gray-100 h-full";
 
-            if (serviceTitle === "Love Marriage & Relationship Solution") {
-                fileName = "love.html";
-            } else if (serviceTitle === "Childless Couple Solution") {
-                fileName = "childless.html";
-            }
-            // Add more specific names here (e.g., divorce.html)
-             else {
-                // Default complex generation for all other cards
-                fileName = serviceTitle.toLowerCase().replace(/ & /g, '').replace(/ /g, '-').replace(/[^\w-]/g, '') + '.html';
-            }
-            // --- END UPDATED LOGIC ---
-            
-            // Determine dynamic placeholder text for image fallback
-            const placeholderText = service.title.toUpperCase().split(' ').slice(0, 2).join('+');
+    let direction = 'bottom';
+    if (index % 4 === 0) direction = 'left';
+    else if (index % 4 === 3) direction = 'right';
 
-            card.innerHTML = `
-                <div class="h-48 overflow-hidden">
-                    <img 
-                        src="${service.imageUrl}" 
-                        alt="${service.title}" 
-                        class="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
-                        onerror="this.onerror=null;this.src='https://placehold.co/400x300/805ad5/ffffff?text=${placeholderText}'"
-                    />
+    card.className += " scroll-reveal";
+    card.setAttribute('data-direction', direction);
+    card.setAttribute('data-delay', (index % 4) * 100);
+    
+    // --- FINAL LOGIC FOR FILENAME (All 13 Services covered) ---
+    let fileName;
+    const serviceTitle = service.title;
+
+    if (serviceTitle === "Love Marriage & Relationship Solution") {
+        fileName = "love.html";
+    } else if (serviceTitle === "Childless Couple Solution") {
+        fileName = "childless.html";
+    } else if (serviceTitle === "Divorce Problem Solution") {
+        fileName = "divorce.html";
+    } else if (serviceTitle === "Business & Financial Problem") {
+        fileName = "business.html";
+    } else if (serviceTitle === "Vashikaran Specialist") {
+        fileName = "vashikaran.html";
+    } else if (serviceTitle === "Black Magic Removal") {
+        fileName = "black.html";
+    } else if (serviceTitle === "Evil Spirit Removal") {
+        fileName = "evil.html";
+    } else if (serviceTitle === "Jealousy & Enemy Problem") {
+        fileName = "jealousy.html";
+    } else if (serviceTitle === "Health Problems Solution") {
+        fileName = "health.html";
+    } else if (serviceTitle === "Psychic Reading") {
+        fileName = "psychic.html";
+    } else if (serviceTitle === "Palm Reading") {
+        fileName = "palm.html";
+    } else if (serviceTitle === "Negative Energy Removal") {
+        fileName = "negative.html";
+    } else if (serviceTitle === "Gemstone Suggestion") { // <-- New/Final Service
+        fileName = "gem.html";                            
+    }
+    // Default complex generation for any unlisted service
+    else {
+        fileName = serviceTitle.toLowerCase().replace(/ & /g, '').replace(/ /g, '-').replace(/[^\w-]/g, '') + '.html';
+    }
+    // --- END FINAL LOGIC ---
+    
+    const placeholderText = service.title.toUpperCase().split(' ').slice(0, 2).join('+');
+
+    card.innerHTML = `
+        <div class="h-48 overflow-hidden">
+            <img 
+                src="${service.imageUrl}" 
+                alt="${service.title}" 
+                class="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                onerror="this.onerror=null;this.src='https://placehold.co/400x300/805ad5/ffffff?text=${placeholderText}'"
+            />
+        </div>
+
+        <div class="p-6 flex flex-col flex-grow">
+            <div class="flex items-center mb-3">
+                <div class="p-2 rounded-full bg-purple-100 ${service.color} w-fit">
+                    <i data-lucide="${service.icon}" class="w-6 h-6"></i>
                 </div>
-
-                <div class="p-6 flex flex-col flex-grow">
-                    <div class="flex items-center mb-3">
-                        <div class="p-2 rounded-full bg-purple-100 ${service.color} w-fit">
-                            <i data-lucide="${service.icon}" class="w-6 h-6"></i>
-                        </div>
-                        <h4 class="text-xl font-bold text-gray-900 ml-3">${service.title}</h4>
-                    </div>
-                    
-                    <p class="text-gray-600 flex-grow text-sm mb-4">${service.description}</p>
-                    
-                    <div class="mt-auto">
-                        <a href="${fileName}" class="mt-2 flex items-center text-sm font-semibold text-purple-600 hover:text-purple-800 transition duration-150">
-                            Seek Guidance <i data-lucide="chevron-right" class="ml-1 w-4 h-4"></i>
-                        </a>
-                    </div>
-                </div>
-            `;
-            return card;
-        }
-
+                <h4 class="text-xl font-bold text-gray-900 ml-3">${service.title}</h4>
+            </div>
+            
+            <p class="text-gray-600 flex-grow text-sm mb-4">${service.description}</p>
+            
+            <div class="mt-auto">
+                <a href="${fileName}" class="mt-2 flex items-center text-sm font-semibold text-purple-600 hover:text-purple-800 transition duration-150">
+                    Seek Guidance <i data-lucide="chevron-right" class="ml-1 w-4 h-4"></i>
+                </a>
+            </div>
+        </div>
+    `;
+    return card;
+}
         function renderServicesSection() {
             const section = document.createElement('section');
             section.id = "services";
