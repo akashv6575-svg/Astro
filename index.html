@@ -649,6 +649,9 @@
             const appRoot = document.getElementById('app-root');
             const main = document.createElement('main');
 
+            // CRITICAL FIX: Ensure no overflow on the main content container
+            appRoot.className = "overflow-x-hidden"; 
+
             // 1. Render Header and Mobile Menu
             const [header, mobileMenu] = renderHeader();
             appRoot.appendChild(header);
